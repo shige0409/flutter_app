@@ -50,6 +50,7 @@ class MyPage extends StatelessWidget {
                           ? ButtonUtil(
                               label: "保存する",
                               onPressed: () async {
+                                model.edited();
                                 await model.updateUser();
                                 model.getUser();
                               },
@@ -73,14 +74,16 @@ class MyPage extends StatelessWidget {
                         label: 'profile',
                         suffixIconSize: model.isUpdated ? size.width * 0.07 : 0,
                       ),
-                      ButtonUtil(
-                        label: 'Log Out',
+                      FlatButton(
+                        textColor: Colors.white,
                         onPressed: () async {
                           await model.signOut();
                           await Navigator.pushReplacementNamed(
                               context, '/first_page');
                         },
-                      )
+                        child: Text("ログアウト"),
+                        color: Colors.red,
+                      ),
                     ],
                   ),
                 ),

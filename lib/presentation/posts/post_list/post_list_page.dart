@@ -37,7 +37,6 @@ class PostListPage extends StatelessWidget {
                 .toList();
             return ListView(
               children: postCards,
-              controller: ScrollController(),
             );
           }),
           floatingActionButton: FloatingActionButton(

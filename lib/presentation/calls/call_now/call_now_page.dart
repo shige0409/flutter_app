@@ -1,32 +1,17 @@
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/presentation/calls/call_now/call_now_model.dart';
+import 'package:provider/provider.dart';
 
-import '../common/text.dart';
-import '../utils/create_components.dart';
-
-class Build {
-  var _users;
-  var _infoStrings;
-  var muted;
-  final _onToggleMute;
-  final _onCallEnd;
-  final _onSwitchCamera;
-
-  Build(this._users, this._infoStrings, this.muted, this._onToggleMute,
-      this._onCallEnd, this._onSwitchCamera);
-
+class CallNowPage extends StatelessWidget {
+  final String callId;
+  const CallNowPage({Key key, this.callId}) : super(key: key);
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(barTitle),
-      ),
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            viewRows(_users),
-
-            //ボタンの表示
+    return ChangeNotifierProvider<CallNowModel>(
+      create: (_) => CallNowModel()..initCall(this.callId),
+      child: Consumer<CallNowModel>(builder: (context, model, child) {
+        return Stack(
+          children: [
             Container(
               alignment: Alignment.bottomCenter,
               padding: const EdgeInsets.symmetric(vertical: 48),
@@ -35,21 +20,23 @@ class Build {
                 children: <Widget>[
                   //ミュートボタン
                   RawMaterialButton(
-                    onPressed: _onToggleMute,
+                    onPressed: () {
+                      model.onToggleMute();
+                    },
                     child: Icon(
-                      muted ? Icons.mic_off : Icons.mic,
-                      color: muted ? Colors.white : Colors.blueAccent,
+                      model.muted ? Icons.mic_off : Icons.mic,
+                      color: model.muted ? Colors.white : Colors.blueAccent,
                       size: 20.0,
                     ),
                     shape: CircleBorder(),
                     elevation: 2.0,
-                    fillColor: muted ? Colors.blueAccent : Colors.white,
+                    fillColor: model.muted ? Colors.blueAccent : Colors.white,
                     padding: const EdgeInsets.all(12.0),
                   ),
 
                   //通話終了ボタン
                   RawMaterialButton(
-                    onPressed: () => _onCallEnd(context),
+                    onPressed: () => model.onCallEnd(context),
                     child: Icon(
                       Icons.call_end,
                       color: Colors.white,
@@ -60,37 +47,22 @@ class Build {
                     fillColor: Colors.redAccent,
                     padding: const EdgeInsets.all(15.0),
                   ),
-
-                  //フロントカメラ・バックカメラ切り替えボタン
-                  RawMaterialButton(
-                    onPressed: _onSwitchCamera,
-                    child: Icon(
-                      Icons.switch_camera,
-                      color: Colors.blueAccent,
-                      size: 20.0,
-                    ),
-                    shape: CircleBorder(),
-                    elevation: 2.0,
-                    fillColor: Colors.white,
-                    padding: const EdgeInsets.all(12.0),
-                  )
                 ],
               ),
             ),
-
-            //情報の表示
             Container(
               padding: const EdgeInsets.symmetric(vertical: 120),
               child: ListView.builder(
                 reverse: true,
-                itemCount: _infoStrings.length,
+                itemCount: model.infoStrings.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (_infoStrings.isEmpty) {
+                  if (model.infoStrings.isEmpty) {
                     return null;
                   }
                   return Text(
-                    _infoStrings[index],
+                    model.infoStrings[index],
                     style: TextStyle(
+                        fontSize: 10,
                         color: Colors.black,
                         backgroundColor: Color.fromARGB(255, 255, 255, 255)),
                   );
@@ -98,8 +70,8 @@ class Build {
               ),
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }
