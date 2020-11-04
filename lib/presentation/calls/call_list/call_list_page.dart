@@ -29,9 +29,8 @@ class CallListPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CallNowPage(
-                                        callId: callCard.callerUserId +
-                                            FirebaseAuth
-                                                .instance.currentUser.uid,
+                                        callerId: callCard.calledUserId,
+                                        calledId: callCard.callerUserId,
                                       )));
                         },
                       ),
