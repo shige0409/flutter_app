@@ -69,7 +69,7 @@ class MyPageModel extends ChangeNotifier {
     final storage = FirebaseStorage.instance;
     StorageTaskSnapshot snapshot = await storage
         .ref()
-        .child("books/${this.user.name}")
+        .child("users/${this.user.userId}")
         .putFile(imageFile)
         .onComplete;
     final downloadUrl = await snapshot.ref.getDownloadURL();

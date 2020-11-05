@@ -19,15 +19,9 @@ class UserListPage extends StatelessWidget {
             final userCards = users
                 .map((user) => Card(
                       child: ListTile(
-                        leading: user.gender == "man"
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2020/02/th_ca_recruitmen202.png?w=600&ssl=1"),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://i1.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2020/02/th_ca_iwoman02.png?w=600&ssl=1"),
-                              ),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(user.imageUrl),
+                        ),
                         title: Text(user.name),
                         subtitle: Text(user.profile),
                         trailing: IconButton(

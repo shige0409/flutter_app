@@ -11,8 +11,8 @@ class UserListModel extends ChangeNotifier {
   Future fetchUsers() async {
     final document = await FirebaseFirestore.instance.collection('users').get();
     final users = document.docs
-        .map((user) => UserData(
-            user['name'], user['profile'], user['gender'], "", user['u_id']))
+        .map((user) => UserData(user['name'], user['profile'], user['gender'],
+            user['mypage_image_url'], user['u_id']))
         .toList();
     this.users = users;
     notifyListeners();

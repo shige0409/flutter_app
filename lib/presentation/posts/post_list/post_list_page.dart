@@ -8,7 +8,7 @@ class PostListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PostListModel>(
-      create: (_) => PostListModel()..readTimeFetchPosts(),
+      create: (_) => PostListModel()..realTimeFetchPosts(),
       child: Scaffold(
           appBar: AppBar(
             title: Text("投稿一覧"),
@@ -19,9 +19,8 @@ class PostListPage extends StatelessWidget {
                 .map((post) => Card(
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2020/02/th_ca_recruitmen202.png?w=600&ssl=1"),
-                        ),
+                            // backgroundImage: Image.network(model.getImageUrl(post.uId)),
+                            ),
                         title: Text(model.now
                                 .difference(post.createAt.toDate())
                                 .inMinutes
