@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/presentation/posts/add_post/add_post_model.dart';
-import 'package:flutter_app/presentation/home/home_page.dart';
 import 'package:provider/provider.dart';
 
 class AddPostPage extends StatelessWidget {

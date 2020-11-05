@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_app/domain/user_data.dart';
@@ -11,20 +10,28 @@ class UserListModel extends ChangeNotifier {
   Future fetchUsers() async {
     final document = await FirebaseFirestore.instance.collection('users').get();
     final users = document.docs
-        .map((user) => UserData(user['name'], user['profile'], user['gender'],
-            user['mypage_image_url'], user['u_id']))
+        .map((user) => UserData(
+              name: user['name'],
+              userId: user['u_id'],
+              imageUrl: user['mypage_image_url'],
+            ))
         .toList();
+    final removeIndex = users.indexWhere(
+        (element) => element.userId == FirebaseAuth.instance.currentUser.uid);
+    users.removeAt(removeIndex);
     this.users = users;
     notifyListeners();
   }
 
   Future addCall(String calledUserId) async {
-    final calls = await FirebaseFirestore.instance.collection('calls');
-    final uId = await FirebaseAuth.instance.currentUser.uid;
+    final callId =
+        calledUserId.hashCode + FirebaseAuth.instance.currentUser.uid.hashCode;
+    final calls = FirebaseFirestore.instance.collection('calls');
     await calls.add({
-      'call_id': uId + calledUserId,
-      'caller_user_id': uId,
+      'call_id': callId.toString(),
+      'caller_user_id': FirebaseAuth.instance.currentUser.uid,
       'called_user_id': calledUserId,
+      'is_opend': false,
       'created_at': Timestamp.now(),
     });
   }

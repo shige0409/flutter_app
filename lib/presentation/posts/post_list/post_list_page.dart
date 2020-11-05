@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/presentation/posts/add_post/add_post_page.dart';
 import 'package:flutter_app/presentation/posts/post_list/post_list_model.dart';

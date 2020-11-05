@@ -15,6 +15,9 @@ class FirstPage extends StatelessWidget {
             child: Container(
               width: double.infinity,
               color: Colors.white,
+              child: Center(
+                child: Image.asset('assets/icons/AppIcon.png'),
+              ),
             ),
           );
         },

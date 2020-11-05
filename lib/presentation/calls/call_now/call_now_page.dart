@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/domain/user_data.dart';
 import 'package:flutter_app/presentation/calls/call_now/call_now_model.dart';
 import 'package:provider/provider.dart';
 
 class CallNowPage extends StatelessWidget {
   final String callerId;
   final String calledId;
-  const CallNowPage({Key key, this.callerId, this.calledId}) : super(key: key);
+  final UserData userData;
+  const CallNowPage({Key key, this.callerId, this.calledId, this.userData})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return ChangeNotifierProvider<CallNowModel>(
-      create: (_) => CallNowModel()..initCall(this.callerId, this.calledId),
+      create: (_) => CallNowModel()
+        ..initCall(this.callerId, this.calledId, this.userData, context),
       child: Scaffold(
         backgroundColor: kBackgroundColor,
         body: Consumer<CallNowModel>(builder: (context, model, child) {
@@ -27,7 +31,7 @@ class CallNowPage extends StatelessWidget {
                       .copyWith(color: Colors.white),
                 ),
                 Text(
-                  "Calling...",
+                  model.callingText,
                   style: TextStyle(color: Colors.white60),
                 ),
                 Padding(
@@ -60,7 +64,10 @@ class CallNowPage extends StatelessWidget {
                       ),
                       //通話終了ボタン
                       RawMaterialButton(
-                        onPressed: () => model.onCallEnd(context),
+                        onPressed: () async {
+                          await UserData.updateIsCalling(false);
+                          await model.onCallEnd(context);
+                        },
                         child: Icon(
                           Icons.call_end,
                           color: Colors.white,

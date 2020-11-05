@@ -7,12 +7,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeModel>(
-      create: (_) => HomeModel()..createPage(),
+      create: (context) => HomeModel()..initPages(context),
       child: Consumer<HomeModel>(builder: (context, model, chile) {
         return Scaffold(
           body: model.pageList[model.index],
           bottomNavigationBar: BottomNavigationBar(
-            items: [
+            items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
               BottomNavigationBarItem(icon: Icon(Icons.people), label: 'users'),
               BottomNavigationBarItem(

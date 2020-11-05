@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/domain/user_data.dart';
 import 'package:flutter_app/presentation/calls/call_now/call_now_page.dart';
-import 'package:flutter_app/presentation/posts/add_post/add_post_page.dart';
 import 'user_list_model.dart';
 import 'package:provider/provider.dart';
 
@@ -27,15 +27,43 @@ class UserListPage extends StatelessWidget {
                         trailing: IconButton(
                           icon: Icon(Icons.call),
                           onPressed: () async {
+                            await UserData.updateIsCalling(true);
                             await model.addCall(user.userId);
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CallNowPage(
-                                          callerId: FirebaseAuth
-                                              .instance.currentUser.uid,
-                                          calledId: user.userId,
-                                        )));
+                            // 相手が通話できる状態か確認
+                            final isCalling =
+                                await UserData.isCallingUser(user.userId);
+                            // 相手が通話できない時
+                            if (isCalling) {
+                              await UserData.updateIsCalling(false);
+                              await showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return AlertDialog(
+                                      title: Text('通話中のようです。'),
+                                      actions: [
+                                        FlatButton(
+                                          child: Text("Ok"),
+                                          onPressed: () async {
+                                            // チャンネルを閉じる
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            } else {
+                              UserData userData =
+                                  await UserData.getUser(user.userId);
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CallNowPage(
+                                            callerId: FirebaseAuth
+                                                .instance.currentUser.uid,
+                                            calledId: user.userId,
+                                            userData: userData,
+                                          )));
+                            }
                           },
                         ),
                       ),
@@ -44,16 +72,8 @@ class UserListPage extends StatelessWidget {
             return ListView(children: userCards);
           }),
           floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddPostPage(),
-                  fullscreenDialog: true,
-                ),
-              );
-            },
+            child: Icon(Icons.mic),
+            onPressed: () {},
           )),
     );
   }

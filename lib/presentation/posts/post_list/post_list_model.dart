@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/post_data.dart';
-import 'package:flutter_app/domain/user_data.dart';
 
 class PostListModel extends ChangeNotifier {
   List<PostData> posts = [];
@@ -33,17 +31,5 @@ class PostListModel extends ChangeNotifier {
       this.posts = posts;
       notifyListeners();
     });
-  }
-
-  Future<String> getImageUrl(String userId) async {
-    final document = await FirebaseFirestore.instance
-        .collection('users')
-        .where('u_id', isEqualTo: userId)
-        .get();
-    final user = await document.docs
-        .map((u) => UserData(u['name'], u['profile'], u['gender'],
-            u['mypage_image_url'], u['u_id']))
-        .toList()[0];
-    return user.imageUrl;
   }
 }

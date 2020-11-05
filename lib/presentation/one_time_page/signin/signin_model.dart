@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/domain/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninModel extends ChangeNotifier {
@@ -12,16 +13,11 @@ class SigninModel extends ChangeNotifier {
   Future signin() async {
     this.showSpinner = true;
     notifyListeners();
-    // todo
+
     try {
       final UserCredential userCredential =
           await _auth.signInWithEmailAndPassword(
               email: this.email, password: this.password);
-      print("longged in");
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      print(userCredential.user.uid);
-      await pref.setString('u_id', userCredential.user.uid);
-      print("save user id to phone");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -29,6 +25,12 @@ class SigninModel extends ChangeNotifier {
         print('Wrong password provided for that user.');
       }
     }
+
+    final String myDocumentId =
+        await UserData.getDocumentId(_auth.currentUser.uid);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('document_id', myDocumentId);
+
     this.showSpinner = false;
     notifyListeners();
   }
