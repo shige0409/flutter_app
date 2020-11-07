@@ -7,6 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SignupModel extends ChangeNotifier {
   String email;
   String password;
+
+  final emailTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+
   bool showSnipper = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -36,8 +40,9 @@ class SignupModel extends ChangeNotifier {
       'profile': 'profile',
       'u_id': FirebaseAuth.instance.currentUser.uid,
       'is_calling': false,
-      'mypage_image_url': kFirstImageUrl,
+      'image_url': kFirstImageUrl,
       'created_at': Timestamp.now(),
+      'login_at': Timestamp.now(),
     });
 
     // 端末にdocumentIdを保存

@@ -62,7 +62,7 @@ class MyPageModel extends ChangeNotifier {
         .collection('users')
         .doc(this.user.documentId)
         .update({
-      'mypage_image_url': downloadUrl,
+      'image_url': downloadUrl,
     });
   }
 

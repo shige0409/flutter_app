@@ -6,7 +6,8 @@ class ButtonUtil extends StatelessWidget {
   const ButtonUtil({
     @required this.label,
     @required this.onPressed,
-  });
+    Key key,
+  }) : super(key: key);
   final String label;
   final VoidCallback onPressed;
   @override
@@ -14,7 +15,7 @@ class ButtonUtil extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.all(10),
-      width: size.width * 0.8,
+      width: size.width * 0.9,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: Container(

@@ -61,25 +61,28 @@ class MyPage extends StatelessWidget {
                                 model.editing();
                               }),
                       TextFieldUtil(
-                        readOnly: !model.isUpdated,
-                        controller: model.nameTextController,
-                        onChanged: (text) => {model.user.name = text},
-                        label: 'name',
-                        suffixIconSize: model.isUpdated ? size.width * 0.07 : 0,
+                        child: TextField(
+                          readOnly: !model.isUpdated,
+                          controller: model.nameTextController,
+                          onChanged: (text) => {model.user.name = text},
+                          decoration: InputDecoration(labelText: 'name'),
+                        ),
                       ),
                       TextFieldUtil(
-                        readOnly: !model.isUpdated,
-                        controller: model.profileTextController,
-                        onChanged: (text) => {model.user.profile = text},
-                        label: 'profile',
-                        suffixIconSize: model.isUpdated ? size.width * 0.07 : 0,
+                        child: TextField(
+                          maxLength: 3,
+                          readOnly: !model.isUpdated,
+                          controller: model.profileTextController,
+                          onChanged: (text) => {model.user.profile = text},
+                          decoration: InputDecoration(labelText: 'name'),
+                        ),
                       ),
                       FlatButton(
                         textColor: Colors.white,
                         onPressed: () async {
                           await model.signOut();
                           await Navigator.pushReplacementNamed(
-                              context, '/first_page');
+                              context, '/init_page');
                         },
                         child: Text("ログアウト"),
                         color: Colors.red,

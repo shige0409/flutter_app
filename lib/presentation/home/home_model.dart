@@ -11,20 +11,23 @@ import 'package:flutter_app/presentation/users/user_list/user_list_page.dart';
 class HomeModel extends ChangeNotifier {
   int index = 0;
   bool isInit = false;
-  List<Widget> pageList = [];
+  final List<Widget> pageList = [
+    PostListPage(),
+    UserListPage(),
+    CallListPage(),
+    MyPage(),
+  ];
   void changePage(int idx) {
-    this.index = idx;
-    notifyListeners();
+    if (this.index != idx) {
+      this.index = idx;
+      notifyListeners();
+    } else {
+      print("更新しない");
+    }
   }
 
   void initPages(BuildContext context) {
     print("create Home");
-    this.pageList = [
-      PostListPage(),
-      UserListPage(),
-      CallListPage(),
-      MyPage(),
-    ];
     final snapshots = FirebaseFirestore.instance
         .collection('calls')
         .where('called_user_id',

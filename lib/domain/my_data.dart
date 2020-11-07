@@ -16,8 +16,8 @@ class MyData {
         .where('u_id', isEqualTo: userId)
         .get();
     final uLists = document.docs
-        .map((u) => MyData(u['name'], u['profile'], u['gender'],
-            u['mypage_image_url'], u['u_id'], u.id))
+        .map((u) => MyData(u['name'], u['profile'], u['gender'], u['image_url'],
+            u['u_id'], u.id))
         .toList();
     return uLists[0];
   }

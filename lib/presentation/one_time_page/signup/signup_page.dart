@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/presentation/common/textfield_util.dart';
 import 'package:flutter_app/presentation/one_time_page/signin/background.dart';
 import 'package:flutter_app/presentation/one_time_page/signin/signin_page.dart';
 import 'signup_model.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
-  final emailTextController = TextEditingController();
-  final passwordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -22,73 +20,24 @@ class SignupPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Signup",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Image.asset(
+                    "assets/icons/AppIcon.png",
+                    height: size.height * 0.4,
                   ),
-                  SvgPicture.asset(
-                    "assets/icons/signup.svg",
-                    height: size.height * 0.3,
-                  ),
-                  Container(
-                    //TextField
-                    margin: EdgeInsets.all(10),
-                    width: size.width * 0.8,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      color: kPrimaryLightColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                  TextFieldUtil(
                     child: TextField(
-                      controller: emailTextController,
+                      keyboardType: TextInputType.emailAddress,
+                      controller: model.emailTextController,
                       onChanged: (text) => {model.email = text},
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: kPrimaryColor,
-                        ),
-                        hintText: "Your Email",
-                        border: InputBorder.none,
-                      ),
+                      decoration: InputDecoration(labelText: "メールアドレス"),
                     ),
                   ),
-                  Container(
-                    //TextField
-                    margin: EdgeInsets.all(10),
-                    width: size.width * 0.8,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      color: kPrimaryLightColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                  TextFieldUtil(
                     child: TextField(
-                      controller: passwordTextController,
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: model.passwordTextController,
                       onChanged: (text) => {model.password = text},
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.lock,
-                            color: kPrimaryColor,
-                          ),
-                          hintText: "PASSWORD",
-                          border: InputBorder.none,
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              print("lock");
-                            },
-                            child: Icon(
-                              Icons.visibility,
-                              color: kPrimaryColor,
-                            ),
-                          )),
+                      decoration: InputDecoration(labelText: "パスワード"),
                     ),
                   ),
                   Container(
@@ -111,7 +60,7 @@ class SignupPage extends StatelessWidget {
                                 .pushReplacementNamed('/home');
                           },
                           child: Text(
-                            "SIGN UP",
+                            "登録",
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -124,9 +73,9 @@ class SignupPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an Account ? ",
+                        "アカウントを持っていたら",
                         style: TextStyle(
-                          color: kPrimaryLightColor,
+                          color: kPinkColor,
                         ),
                       ),
                       GestureDetector(
@@ -137,10 +86,10 @@ class SignupPage extends StatelessWidget {
                                   builder: (context) => SigninPage()));
                         },
                         child: Text(
-                          "Sign In",
+                          "ログインページへ",
                           style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     ],

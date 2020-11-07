@@ -38,6 +38,7 @@ class PostListPage extends StatelessWidget {
             );
           }),
           floatingActionButton: FloatingActionButton(
+            heroTag: 'add_post',
             child: Icon(Icons.add),
             onPressed: () async {
               await Navigator.push(

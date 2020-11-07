@@ -6,7 +6,6 @@ class AddVoicePage extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Image.asset("assets/icons/AppIcon.png"),
           GestureDetector(
             child: Icon(Icons.mic_sharp),
             onLongPress: () {},

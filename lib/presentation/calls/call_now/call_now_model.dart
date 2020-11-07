@@ -63,8 +63,9 @@ class CallNowModel extends ChangeNotifier {
     super.dispose();
   }
 
-  void onCallEnd(BuildContext context) {
-    Navigator.popUntil(context, ModalRoute.withName('/home'));
+  Future<void> onCallEnd(BuildContext context) async {
+    await UserData.updateIsCalling(false);
+    await Navigator.popUntil(context, ModalRoute.withName('/home'));
   }
 
   void onToggleMute() {

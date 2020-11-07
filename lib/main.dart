@@ -1,15 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/presentation/home/home_page.dart';
+import 'package:flutter_app/presentation/one_time_page/second/second_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signin/signin_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signup/signup_page.dart';
+import 'package:flutter_app/presentation/one_time_page/third/third_page.dart';
 import 'constants.dart';
-import 'package:flutter_app/presentation/one_time_page/first_page/first_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await runApp(MyApp());
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,16 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
         title: "Voite",
-        theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: FirstPage(),
+        theme: kThemeData,
+        home: SecondPage(),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomePage(),
-          '/first_page': (BuildContext context) => FirstPage(),
+          '/second_page': (BuildContext context) => SecondPage(),
+          '/third_page': (BuildContext context) => ThirdPage(),
           '/signin': (BuildContext context) => SigninPage(),
           '/signup': (BuildContext context) => SignupPage(),
         });

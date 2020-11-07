@@ -65,7 +65,6 @@ class CallNowPage extends StatelessWidget {
                       //通話終了ボタン
                       RawMaterialButton(
                         onPressed: () async {
-                          await UserData.updateIsCalling(false);
                           await model.onCallEnd(context);
                         },
                         child: Icon(

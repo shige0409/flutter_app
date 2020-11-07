@@ -13,7 +13,7 @@ class UserListModel extends ChangeNotifier {
         .map((user) => UserData(
               name: user['name'],
               userId: user['u_id'],
-              imageUrl: user['mypage_image_url'],
+              imageUrl: user['image_url'],
             ))
         .toList();
     final removeIndex = users.indexWhere(

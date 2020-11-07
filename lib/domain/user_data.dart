@@ -30,7 +30,7 @@ class UserData {
       name: u['name'],
       profile: u['profile'],
       gender: u['gender'],
-      imageUrl: u['mypage_image_url'],
+      imageUrl: u['image_url'],
       isCalling: u['is_calling'],
       userId: u['u_id'],
     );

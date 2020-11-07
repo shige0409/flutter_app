@@ -6,6 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SigninModel extends ChangeNotifier {
   String email;
   String password;
+
+  final emailTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+
   bool showSpinner = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,6 +30,7 @@ class SigninModel extends ChangeNotifier {
       }
     }
 
+    // 自分のデータを更新するためドキュメントIDを端末に保存しておく
     final String myDocumentId =
         await UserData.getDocumentId(_auth.currentUser.uid);
     SharedPreferences pref = await SharedPreferences.getInstance();
