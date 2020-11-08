@@ -6,6 +6,7 @@ import 'package:flutter_app/presentation/one_time_page/fourth/fourth_page.dart';
 import 'package:flutter_app/presentation/one_time_page/second/second_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signin/signin_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signup/signup_page.dart';
+import 'package:flutter_app/presentation/users/my_page/mypage_edit_page.dart';
 import 'constants.dart';
 
 void main() {
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => HomePage(),
+        '/user/edit': (BuildContext context) => MyPageEditPage(),
         '/init': (BuildContext context) => InitRootPage(),
         '/second': (BuildContext context) => SecondPage(),
         '/fourth': (BuildContext context) => FourthPage(),

@@ -61,7 +61,7 @@ class SecondPage extends StatelessWidget {
                       builder: (BuildContext context) {
                         return CupertinoPicker(
                           itemExtent: 30,
-                          children: model.cityList.map((e) => Text(e)).toList(),
+                          children: kCityList.map((e) => Text(e)).toList(),
                           onSelectedItemChanged: (int index) {
                             model.updateCity(index);
                           },

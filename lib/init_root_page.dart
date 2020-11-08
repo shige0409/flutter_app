@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/presentation/home/home_page.dart';
-import 'package:flutter_app/presentation/one_time_page/fourth/fourth_page.dart';
 import 'package:flutter_app/presentation/one_time_page/introduce/introduce_page.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +32,6 @@ class InitRootPage extends StatelessWidget {
   }
 
   Future<String> initialize() async {
-    await Future.delayed(Duration(seconds: 1));
     final pref = await SharedPreferences.getInstance();
     if (pref.getString('u_id') == null) {
       throw Error();

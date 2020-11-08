@@ -39,7 +39,7 @@ class MyPage extends StatelessWidget {
                   ButtonUtil(
                     label: "編集する",
                     onPressed: () {
-                      // to edit page
+                      Navigator.pushNamed(context, '/user/edit');
                     },
                   ),
                   Container(

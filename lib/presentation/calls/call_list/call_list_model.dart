@@ -7,7 +7,7 @@ class CallListModel extends ChangeNotifier {
   List<CallData> callLists = [];
 
   Future fetchCallList() async {
-    final currentUserId = MyData.getCurrenUserId();
+    final currentUserId = await MyData.getCurrenUserId();
     final document = await FirebaseFirestore.instance
         .collection('calls')
         .where('called_user_id', isEqualTo: currentUserId)

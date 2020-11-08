@@ -8,14 +8,14 @@ import '../constants.dart';
 
 class MyData {
   MyData({
-    this.name,
-    this.profile,
-    this.gender,
-    this.imageUrl,
-    this.userId,
-    this.documentId,
-    this.age,
-    this.city,
+    this.name = "",
+    this.profile = "",
+    this.gender = "",
+    this.imageUrl = kFirstImageUrl,
+    this.userId = "",
+    this.documentId = "",
+    this.age = "",
+    this.city = "",
   });
   String gender;
   String name;
@@ -54,11 +54,11 @@ class MyData {
 
     final users = FirebaseFirestore.instance.collection('users');
     final result = await users.add({
-      'gender': 'gender',
-      'name': 'name',
-      'city': 'city',
-      'age': 'age',
-      'profile': 'profile',
+      'gender': '',
+      'name': '',
+      'city': '',
+      'age': '',
+      'profile': '',
       'image_url': kFirstImageUrl,
       'u_id': userId,
       'is_calling': false,
