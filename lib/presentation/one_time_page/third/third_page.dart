@@ -1,19 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/domain/user_data.dart';
 import 'package:flutter_app/presentation/common/button_util.dart';
 import 'package:flutter_app/presentation/common/textfield_util.dart';
-import 'package:flutter_app/presentation/one_time_page/second/second_model.dart';
 import 'package:flutter_app/presentation/one_time_page/third/third_model.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class ThirdPage extends StatelessWidget {
-  String gender;
-  String name;
-  String city;
-  String age;
-  ThirdPage({this.gender, this.name, this.city, this.age});
+  final UserData user;
+  const ThirdPage({this.user});
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -64,12 +62,15 @@ class ThirdPage extends StatelessWidget {
                       onPressed: () async {
                         // ユーザー情報をアップデートしてHomeページに移動
                         await model.updateUser({
-                          'gender': this.gender,
-                          'name': this.name,
-                          'city': this.city,
-                          'age': this.age,
+                          'gender': user.gender,
+                          'name': user.name,
+                          'profile': model.profile,
+                          'image_url': model.downloadUrl,
+                          'city': user.city,
+                          'age': user.age,
                         });
-                        await Navigator.pushReplacementNamed(context, '/home');
+                        await Navigator.pushReplacementNamed(
+                            context, '/fourth');
                       })
                 ]),
           );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TextFieldUtil extends StatelessWidget {
-  TextFieldUtil({@required this.child});
-  Widget child;
+  const TextFieldUtil({@required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

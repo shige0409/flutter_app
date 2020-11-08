@@ -57,7 +57,7 @@ class MyData {
       'gender': 'gender',
       'name': 'name',
       'city': 'city',
-      'age': '',
+      'age': 'age',
       'profile': 'profile',
       'image_url': kFirstImageUrl,
       'u_id': userId,

@@ -1,25 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/domain/my_data.dart';
 
 class FourthModel extends ChangeNotifier {
-  String gender;
-  String name;
-  String age;
+  final List<bool> checkList = List.generate(12, (index) => false);
+  bool showSnipper = false;
 
-  final List<String> ageList =
-      List.generate(50, (index) => (index + 16).toString());
-
-  final ageController = TextEditingController();
-
-  void updateGender(dynamic val) {
-    this.gender = val;
+  void updateCheck(int idx) {
+    checkList[idx] = !checkList[idx];
+    notifyListeners();
   }
 
-  void updateName(text) {
-    this.name = text;
-  }
+  Future<void> createHobby() async {
+    showSnipper = true;
+    notifyListeners();
 
-  void updateAge(int idx) {
-    this.age = ageList[idx];
-    this.ageController.value = TextEditingValue(text: this.age);
+    final documents = FirebaseFirestore.instance.collection('hobbies');
+    final userId = await MyData.getCurrenUserId();
+    await documents.add({'u_id': userId, 'hobby_list': checkList});
+
+    showSnipper = false;
+    notifyListeners();
   }
 }

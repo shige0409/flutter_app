@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import '../../constants.dart';
 
 class CardUtil extends StatelessWidget {
-  Widget child;
-  CardUtil({@required this.child});
+  final Widget child;
+  const CardUtil({@required this.child});
   @override
   Widget build(BuildContext context) {
     return Expanded(

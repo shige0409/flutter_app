@@ -1,13 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/my_data.dart';
 import 'package:flutter_app/domain/user_data.dart';
 import 'package:flutter_app/presentation/calls/call_now/call_now_page.dart';
-import 'package:flutter_app/presentation/common/textfield_util.dart';
 
 class UserShowPage extends StatelessWidget {
-  UserData user;
-  UserShowPage({this.user});
+  final UserData user;
+  const UserShowPage({this.user});
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

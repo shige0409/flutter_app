@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/presentation/common/button_util.dart';
-import 'package:flutter_app/presentation/common/textfield_util.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 import 'my_page_model.dart';

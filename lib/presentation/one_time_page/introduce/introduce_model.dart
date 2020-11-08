@@ -7,10 +7,10 @@ class IntroduceModel extends ChangeNotifier {
   int nextCount = 0;
   List<bool> isNowPage = [true, false, false, false];
   final imageList = [
-    Image.asset("assets/icons/AppIcon.png"),
-    Image.asset("assets/icons/AppIcon.png"),
-    Image.asset("assets/icons/AppIcon.png"),
-    Image.asset("assets/icons/AppIcon.png"),
+    Image.asset("assets/images/intro1.jpg"),
+    Image.asset("assets/images/intro2.jpg"),
+    Image.asset("assets/images/intro3.jpg"),
+    Image.asset("assets/images/intro4.jpg"),
   ];
 
   void nextPage() {

@@ -1,7 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
-import 'package:flutter_app/domain/my_data.dart';
 import 'package:flutter_app/presentation/common/button_util.dart';
 import 'package:flutter_app/presentation/one_time_page/introduce/introduce_model.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +41,25 @@ class IntroducePage extends StatelessWidget {
                   : ButtonUtil(
                       label: "はじめる",
                       onPressed: () async {
+                        // DBにユーザーを作成して、端末にuserIdに保存する
                         await model.createUser();
-                        await Navigator.pushReplacementNamed(context, '/home');
+                        await Navigator.pushReplacementNamed(
+                            context, '/second');
                       }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/signin');
+                    },
+                    child: Text(
+                      "すでにアカウントを持っている",
+                      style: TextStyle(color: Colors.redAccent),
+                    ),
+                  )
+                ],
+              ),
             ],
           );
         }),

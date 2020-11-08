@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/init_root_page.dart';
 import 'package:flutter_app/presentation/home/home_page.dart';
+import 'package:flutter_app/presentation/one_time_page/fourth/fourth_page.dart';
 import 'package:flutter_app/presentation/one_time_page/second/second_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signin/signin_page.dart';
 import 'package:flutter_app/presentation/one_time_page/signup/signup_page.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home': (BuildContext context) => HomePage(),
         '/init': (BuildContext context) => InitRootPage(),
         '/second': (BuildContext context) => SecondPage(),
+        '/fourth': (BuildContext context) => FourthPage(),
         '/signin': (BuildContext context) => SigninPage(),
         '/signup': (BuildContext context) => SignupPage(),
       },
