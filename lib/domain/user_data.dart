@@ -7,12 +7,18 @@ class UserData {
   final String name;
   String profile;
   String gender;
+  String city;
+  String age;
+  Timestamp loginAt;
   String imageUrl;
   bool isCalling;
   final String userId;
 
   UserData({
     @required this.name,
+    this.age,
+    this.city,
+    this.loginAt,
     this.profile = "",
     this.gender = "",
     this.isCalling = false,

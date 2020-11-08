@@ -57,7 +57,7 @@ class SignupPage extends StatelessWidget {
                             await model.signup();
                             await model.createUser();
                             await Navigator.of(context)
-                                .pushReplacementNamed('/home');
+                                .pushReplacementNamed('/second');
                           },
                           child: Text(
                             "登録",

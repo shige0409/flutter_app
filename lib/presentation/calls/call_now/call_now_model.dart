@@ -17,8 +17,6 @@ class CallNowModel extends ChangeNotifier {
     await AgoraRtcEngine.create(kAPP_ID);
     await AgoraRtcEngine.enableAudio();
     await AgoraRtcEngine.enableWebSdkInteroperability(true);
-    // await AgoraRtcEngine.setParameters(
-    //     '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
     this.user = userData;
 
     await AgoraRtcEngine.joinChannel(
@@ -48,10 +46,11 @@ class CallNowModel extends ChangeNotifier {
       print('ユーザーが退出しました: $uid');
       this._users.remove(uid);
       if (this._users.length == 1) {
-        this.callingText = "通話終了";
+        this.callingText = "通話が終了しました";
       }
+      AgoraRtcEngine.leaveChannel();
+      AgoraRtcEngine.destroy();
       notifyListeners();
-      onCallEnd(context);
     };
   }
 
@@ -65,7 +64,6 @@ class CallNowModel extends ChangeNotifier {
 
   Future<void> onCallEnd(BuildContext context) async {
     await UserData.updateIsCalling(false);
-    await Navigator.popUntil(context, ModalRoute.withName('/home'));
   }
 
   void onToggleMute() {

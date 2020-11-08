@@ -22,8 +22,8 @@ class ButtonUtil extends StatelessWidget {
           color: kPrimaryColor,
           child: FlatButton(
             padding: EdgeInsets.symmetric(
-              horizontal: 40,
-              vertical: 20,
+              horizontal: 5,
+              vertical: 5,
             ),
             onPressed: onPressed,
             child: Text(

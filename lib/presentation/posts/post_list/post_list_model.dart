@@ -18,18 +18,18 @@ class PostListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void realTimeFetchPosts() {
-    final snapshots = FirebaseFirestore.instance
-        .collection('posts')
-        .orderBy('created_at', descending: true)
-        .limit(10)
-        .snapshots();
-    snapshots.listen((snapshot) {
-      final posts = snapshot.docs
-          .map((doc) => PostData(doc['text'], doc['u_id'], doc['created_at']))
-          .toList();
-      this.posts = posts;
-      notifyListeners();
-    });
-  }
+  // void realTimeFetchPosts(BuildContext context) {
+  //   final snapshots = FirebaseFirestore.instance
+  //       .collection('posts')
+  //       .orderBy('created_at', descending: true)
+  //       .limit(10)
+  //       .snapshots();
+  //   snapshots.listen((snapshot) {
+  //     final posts = snapshot.docs
+  //         .map((doc) => PostData(doc['text'], doc['u_id'], doc['created_at']))
+  //         .toList();
+  //     this.posts = posts;
+  //     notifyListeners();
+  //   });
+  // }
 }

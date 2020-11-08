@@ -15,81 +15,48 @@ class MyPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          title: Text("My Page"),
+          leading: Icon(Icons.notifications),
+          title: Text("マイページ"),
+          actions: [IconButton(icon: Icon(Icons.settings), onPressed: null)],
         ),
         body: Consumer<MyPageModel>(builder: (context, model, child) {
-          return GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: ModalProgressHUD(
-              inAsyncCall: model.showSnipper,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CircleAvatar(
-                        child: InkWell(
-                          child: model.isUpdated
-                              ? Icon(
-                                  Icons.add,
-                                  size: size.width * 0.4,
-                                  color: Colors.white.withOpacity(0.4),
-                                )
-                              : Icon(Icons.add, size: 0),
-                          onTap: () async {
-                            model.getImage();
-                          },
-                        ),
-                        radius: size.width * 0.25,
-                        backgroundImage: NetworkImage(model.user.imageUrl),
-                      ),
-                      model.isUpdated
-                          ? ButtonUtil(
-                              label: "保存する",
-                              onPressed: () async {
-                                model.edited();
-                                await model.updateUser();
-                                model.getUser();
-                              },
-                            )
-                          : ButtonUtil(
-                              label: "編集する",
-                              onPressed: () {
-                                model.editing();
-                              }),
-                      TextFieldUtil(
-                        child: TextField(
-                          readOnly: !model.isUpdated,
-                          controller: model.nameTextController,
-                          onChanged: (text) => {model.user.name = text},
-                          decoration: InputDecoration(labelText: 'name'),
-                        ),
-                      ),
-                      TextFieldUtil(
-                        child: TextField(
-                          maxLength: 3,
-                          readOnly: !model.isUpdated,
-                          controller: model.profileTextController,
-                          onChanged: (text) => {model.user.profile = text},
-                          decoration: InputDecoration(labelText: 'name'),
-                        ),
-                      ),
-                      FlatButton(
-                        textColor: Colors.white,
-                        onPressed: () async {
-                          await model.signOut();
-                          await Navigator.pushReplacementNamed(
-                              context, '/init_page');
-                        },
-                        child: Text("ログアウト"),
-                        color: Colors.red,
-                      ),
-                    ],
+          return SingleChildScrollView(
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
+                  CircleAvatar(
+                    radius: size.width * 0.2,
+                    backgroundImage: NetworkImage(model.user.imageUrl),
+                  ),
+                  Text(model.user.name),
+                  Text(
+                    "${model.user.city} ・ ${model.user.age}歳",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Text(model.user.profile),
+                  ButtonUtil(
+                    label: "編集する",
+                    onPressed: () {
+                      // to edit page
+                    },
+                  ),
+                  Container(
+                    child: Image.asset("assets/icons/AppIcon.png"),
+                  ),
+                  FlatButton(
+                    textColor: Colors.white,
+                    child: Text("ログアウト"),
+                    color: Colors.red,
+                    onPressed: () async {
+                      await model.signOut();
+                      await Navigator.pushReplacementNamed(context, '/init');
+                    },
+                  ),
+                ],
               ),
             ),
           );

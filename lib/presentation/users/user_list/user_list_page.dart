@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
-import 'package:flutter_app/domain/user_data.dart';
-import 'package:flutter_app/presentation/calls/call_now/call_now_page.dart';
+import 'package:flutter_app/presentation/users/user_show/user_show_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'user_list_model.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
 
 class UserListPage extends StatelessWidget {
   @override
@@ -13,113 +14,79 @@ class UserListPage extends StatelessWidget {
     return ChangeNotifierProvider<UserListModel>(
       create: (_) => UserListModel()..fetchUsers(),
       child: Scaffold(
-          appBar: AppBar(
-            title: Text("ユーザー一覧"),
-          ),
           body: Consumer<UserListModel>(builder: (context, model, child) {
             final users = model.users;
-            final List<Widget> userCards = [];
+            final List<Widget> userCards = [SizedBox(height: 20)];
             final tmp = [];
             users.asMap().forEach((idx, u) {
-              print(idx);
-              tmp.add(Container(
-                  padding: EdgeInsets.all(10),
-                  width: size.width * 0.45,
-                  height: size.width * 0.5,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          backgroundImage: NetworkImage(u.imageUrl),
-                          radius: size.width * 0.15),
-                      Text(u.name),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("マッチ度"),
-                          Text(
-                            "98",
-                            style: TextStyle(
-                                color: kPinkColor, fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )
-                    ],
-                  )));
+              tmp.add(GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => UserShowPage(
+                        user: u,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                    width: size.width * 0.45,
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: u.gender == "man" ? kBlueColor : kPinkColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Hero(
+                          tag: u.imageUrl,
+                          child: CircleAvatar(
+                              backgroundImage: NetworkImage(u.imageUrl),
+                              radius: size.width * 0.15),
+                        ),
+                        Text(u.name),
+                        Text(
+                          "${u.city} ・ ${u.age}歳",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("相性: "),
+                            Text(
+                              math.Random().nextInt(100).toString(),
+                              style: TextStyle(
+                                  color: u.gender == "man"
+                                      ? kPinkColor
+                                      : kBlueColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const Text("%"),
+                          ],
+                        ),
+                      ],
+                    )),
+              ));
               if (idx % 2 == 0) {
               } else {
                 userCards.add(Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     tmp[0],
                     tmp[1],
                   ],
                 ));
-                tmp.removeAt(1);
-                tmp.removeAt(0);
+                tmp.clear();
               }
             });
-            // final userCards = users
-            //     .map((user) => Card(
-            //           child: ListTile(
-            //             leading: CircleAvatar(
-            //               backgroundImage: NetworkImage(user.imageUrl),
-            //             ),
-            //             title: Text(user.name),
-            //             subtitle: Text(user.profile),
-            //             trailing: IconButton(
-            //               icon: Icon(Icons.call),
-            //               onPressed: () async {
-            //                 await UserData.updateIsCalling(true);
-            //                 await model.addCall(user.userId);
-            //                 // 相手が通話できる状態か確認
-            //                 final isCalling =
-            //                     await UserData.isCallingUser(user.userId);
-            //                 // 相手が通話できない時
-            //                 if (isCalling) {
-            //                   await UserData.updateIsCalling(false);
-            //                   await showDialog(
-            //                       context: context,
-            //                       builder: (_) {
-            //                         return AlertDialog(
-            //                           title: Text('通話中のようです。'),
-            //                           actions: [
-            //                             FlatButton(
-            //                               child: Text("Ok"),
-            //                               onPressed: () async {
-            //                                 // チャンネルを閉じる
-            //                                 Navigator.pop(context);
-            //                               },
-            //                             ),
-            //                           ],
-            //                         );
-            //                       });
-            //                 } else {
-            //                   UserData userData =
-            //                       await UserData.getUser(user.userId);
-            //                   await Navigator.push(
-            //                       context,
-            //                       MaterialPageRoute(
-            //                           builder: (context) => CallNowPage(
-            //                                 callerId: FirebaseAuth
-            //                                     .instance.currentUser.uid,
-            //                                 calledId: user.userId,
-            //                                 userData: userData,
-            //                               )));
-            //                 }
-            //               },
-            //             ),
-            //           ),
-            //         ))
-            //     .toList();
-            return Column(children: userCards);
+            return SingleChildScrollView(child: Column(children: userCards));
           }),
           floatingActionButton: FloatingActionButton(
             heroTag: 'voice record',
-            child: Icon(Icons.mic),
+            child: Icon(FontAwesomeIcons.slidersH),
             onPressed: () {},
           )),
     );

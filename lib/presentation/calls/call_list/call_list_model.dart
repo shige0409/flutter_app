@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/call_data.dart';
+import 'package:flutter_app/domain/my_data.dart';
 
 class CallListModel extends ChangeNotifier {
   List<CallData> callLists = [];
 
   Future fetchCallList() async {
-    final currentUserId = FirebaseAuth.instance.currentUser.uid;
+    final currentUserId = MyData.getCurrenUserId();
     final document = await FirebaseFirestore.instance
         .collection('calls')
         .where('called_user_id', isEqualTo: currentUserId)

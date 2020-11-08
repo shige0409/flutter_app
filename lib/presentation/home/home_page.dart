@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     print("create Home");
     return ChangeNotifierProvider<HomeModel>(
-      create: (context) => HomeModel()..initPages(context),
+      create: (context) => HomeModel(),
       child: Consumer<HomeModel>(builder: (context, model, chile) {
         return Scaffold(
           body: IndexedStack(

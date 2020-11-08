@@ -7,7 +7,7 @@ class PostListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PostListModel>(
-      create: (_) => PostListModel()..realTimeFetchPosts(),
+      create: (_) => PostListModel()..fetchPosts(),
       child: Scaffold(
           appBar: AppBar(
             title: Text("投稿一覧"),

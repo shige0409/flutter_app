@@ -9,8 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPageModel extends ChangeNotifier {
-  MyData user = MyData(
-      'name', 'profile', 'gender', 'image_url', 'user_id', 'document_id');
+  MyData user;
 
   final TextEditingController nameTextController = TextEditingController();
   final TextEditingController profileTextController = TextEditingController();
@@ -20,7 +19,8 @@ class MyPageModel extends ChangeNotifier {
   bool showSnipper = false;
 
   Future getUser() async {
-    this.user = await MyData.getUser(FirebaseAuth.instance.currentUser.uid);
+    final userId = await MyData.getCurrenUserId();
+    this.user = await MyData.getUser(userId);
     this.nameTextController.text = user.name;
     this.profileTextController.text = user.profile;
     notifyListeners();
@@ -69,6 +69,7 @@ class MyPageModel extends ChangeNotifier {
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('u_id', '');
+    await pref.remove('document_id');
+    await pref.remove('u_id');
   }
 }

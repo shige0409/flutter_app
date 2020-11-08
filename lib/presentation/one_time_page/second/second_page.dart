@@ -4,6 +4,7 @@ import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/presentation/common/button_util.dart';
 import 'package:flutter_app/presentation/common/textfield_util.dart';
 import 'package:flutter_app/presentation/one_time_page/second/second_model.dart';
+import 'package:flutter_app/presentation/one_time_page/third/third_page.dart';
 import 'package:provider/provider.dart';
 
 class SecondPage extends StatelessWidget {
@@ -95,7 +96,15 @@ class SecondPage extends StatelessWidget {
                 ButtonUtil(
                     label: '次へ',
                     onPressed: () {
-                      Navigator.pushNamed(context, '/third_page');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ThirdPage(
+                                    gender: model.gender,
+                                    name: model.name,
+                                    city: model.city,
+                                    age: model.age,
+                                  )));
                     })
               ]);
         }),

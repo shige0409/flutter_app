@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/domain/my_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupModel extends ChangeNotifier {
@@ -33,21 +35,7 @@ class SignupModel extends ChangeNotifier {
   }
 
   Future createUser() async {
-    final users = FirebaseFirestore.instance.collection('users');
-    final result = await users.add({
-      'gender': 'gender',
-      'name': 'name',
-      'profile': 'profile',
-      'u_id': FirebaseAuth.instance.currentUser.uid,
-      'is_calling': false,
-      'image_url': kFirstImageUrl,
-      'created_at': Timestamp.now(),
-      'login_at': Timestamp.now(),
-    });
-
-    // 端末にdocumentIdを保存
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('document_id', result.id);
+    await MyData.createUser();
     this.showSnipper = false;
     notifyListeners();
     print('finish create user');

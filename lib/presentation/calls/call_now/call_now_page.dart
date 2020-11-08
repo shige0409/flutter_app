@@ -66,6 +66,7 @@ class CallNowPage extends StatelessWidget {
                       RawMaterialButton(
                         onPressed: () async {
                           await model.onCallEnd(context);
+                          await Navigator.pop(context);
                         },
                         child: Icon(
                           Icons.call_end,

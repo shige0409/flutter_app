@@ -9,9 +9,26 @@ const kRedColor = Color(0xFFFF1E46);
 const kBlueColor = Color(0xFFB0DEEC);
 const kPinkColor = Color(0xFFF9BBE7);
 final kThemeData = ThemeData(
-    primaryColor: kPrimaryColor,
-    scaffoldBackgroundColor: kGrayColor,
-    textTheme: TextTheme());
+  primaryColor: kPrimaryColor,
+  scaffoldBackgroundColor: Colors.white,
+  appBarTheme: AppBarTheme(
+    elevation: 0,
+    iconTheme: IconThemeData(
+      color: Colors.grey,
+    ),
+    textTheme: TextTheme(
+      headline6: TextStyle(
+        color: Colors.grey,
+      ),
+    ),
+    color: Colors.white,
+    centerTitle: true,
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: kPrimaryColor,
+  ),
+  textTheme: TextTheme(),
+);
 
 const kFirstImageUrl =
     "https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2020/02/th_ca_recruitmen202.png?w=600&ssl=1";
